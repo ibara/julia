@@ -1077,7 +1077,7 @@ void jl_dump_native(const char *bc_fname, const char *unopt_bc_fname, const char
         jl_TargetMachine->getTargetCPU(),
         jl_TargetMachine->getTargetFeatureString(),
         jl_TargetMachine->Options,
-#if defined(_OS_LINUX_) || defined(_OS_FREEBSD_)
+#if defined(_OS_LINUX_) || defined(_OS_FREEBSD_) || defined(_OS_OPENBSD_)
         Reloc::PIC_,
 #else
         Optional<Reloc::Model>(),

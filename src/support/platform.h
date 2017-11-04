@@ -20,6 +20,7 @@
  *      OS:
  *          _OS_FREEBSD_
  *          _OS_LINUX_
+ *          _OS_OPENBSD_
  *          _OS_WINDOWS_
  *          _OS_DARWIN_
  *
@@ -67,6 +68,8 @@
 #define _OS_FREEBSD_
 #elif defined(__linux__)
 #define _OS_LINUX_
+#if defined(__OpenBSD__)
+#define _OS_OPENBSD_
 #elif defined(_WIN32) || defined(_WIN64)
 #define _OS_WINDOWS_
 #elif defined(__APPLE__) && defined(__MACH__)

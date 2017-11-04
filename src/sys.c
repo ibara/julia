@@ -18,7 +18,7 @@
 #include <psapi.h>
 #else
 #include <unistd.h>
-#if !defined(_SC_NPROCESSORS_ONLN) || defined(_OS_FREEBSD_) || defined(_OS_DARWIN_)
+#if !defined(_SC_NPROCESSORS_ONLN) || defined(_OS_FREEBSD_) || defined(__OpenBSD__) || defined(_OS_DARWIN_)
 // try secondary location for _SC_NPROCESSORS_ONLN, or for HW_AVAILCPU on BSDs
 #include <sys/sysctl.h>
 #endif
@@ -560,7 +560,7 @@ JL_DLLEXPORT const char *jl_pathname_for_handle(void *handle)
     free(pth16);
     return filepath;
 
-#else // Linux, FreeBSD, ...
+#else // Linux, FreeBSD, OpenBSD ...
 
     struct link_map *map;
     dlinfo(handle, RTLD_DI_LINKMAP, &map);
@@ -628,11 +628,11 @@ JL_DLLEXPORT size_t jl_maxrss(void)
 
 // FIXME: `rusage` is available on OpenBSD, DragonFlyBSD and NetBSD as well.
 //        All of them return `ru_maxrss` in kilobytes.
-#elif defined(_OS_LINUX_) || defined(_OS_DARWIN_) || defined (_OS_FREEBSD_)
+#elif defined(_OS_LINUX_) || defined(_OS_DARWIN_) || defined (_OS_FREEBSD_) || defined(_OS_OPENBSD_)
     struct rusage rusage;
     getrusage( RUSAGE_SELF, &rusage );
 
-#if defined(_OS_LINUX_) || defined(_OS_FREEBSD_)
+#if defined(_OS_LINUX_) || defined(_OS_FREEBSD_) || defined(_OS_OPENBSD_)
     return (size_t)(rusage.ru_maxrss * 1024);
 #else
     return (size_t)rusage.ru_maxrss;

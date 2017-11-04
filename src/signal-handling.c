@@ -123,9 +123,13 @@ static uintptr_t jl_get_pc_from_ctx(const void *_ctx)
     return ((ucontext_t*)_ctx)->uc_mcontext.gregs[REG_RIP];
 #elif defined(_OS_FREEBSD_) && defined(_CPU_X86_64_)
     return ((ucontext_t*)_ctx)->uc_mcontext.mc_rip;
+#elif defined(_OS_OPENBSD_) && defined(_CPU_X86_64_)
+    return ((ucontext_t*)_ctx)->uc_mcontext.mc_rip;
 #elif defined(_OS_LINUX_) && defined(_CPU_X86_)
     return ((ucontext_t*)_ctx)->uc_mcontext.gregs[REG_EIP];
 #elif defined(_OS_FREEBSD_) && defined(_CPU_X86_)
+    return ((ucontext_t*)_ctx)->uc_mcontext.mc_eip;
+#elif defined(_OS_OPENBSD_) && defined(_CPU_X86_)
     return ((ucontext_t*)_ctx)->uc_mcontext.mc_eip;
 #elif defined(_OS_DARWIN_)
     return ((ucontext64_t*)_ctx)->uc_mcontext64->__ss.__rip;

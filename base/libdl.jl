@@ -209,7 +209,7 @@ if Sys.islinux()
 end # linux-only
 
 if Sys.isbsd() && !Sys.isapple()
-    # DL_ITERATE_PHDR(3) on freebsd
+    # DL_ITERATE_PHDR(3) on freebsd and openbsd
     struct dl_phdr_info
         # Base address of object
         addr::Cuint

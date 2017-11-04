@@ -36,7 +36,7 @@
 #define _START_ENTRY .p2align 4,0x90
 #define STR(csym)           #csym
 #define XSTR(csym)          STR(csym)
-#if defined(__linux__) || defined(__FreeBSD__) || defined(__ELF__)
+#if defined(__linux__) || defined(__FreeBSD__) || defined(__OpenBSD__) || defined(__ELF__)
 #ifndef __APPLE__
 #define EXT_(csym)          csym
 #define EXT(csym)           EXT_(csym)

@@ -22,7 +22,7 @@
 // Figure out the best signals/timers to use for this platform
 #ifdef __APPLE__ // Darwin's mach ports allow signal-free thread management
 #define HAVE_MACH
-#elif defined(__FreeBSD__) // generic bsd
+#elif defined(__FreeBSD__) || defined(__OpenBSD__) // generic bsd
 #define HAVE_ITIMER
 #else // generic linux
 #define HAVE_TIMER
@@ -98,6 +98,12 @@ static void jl_call_in_ctx(jl_ptls_t ptls, void (*fptr)(void), void *_ctx)
     *(void**)rsp = NULL;
     ctx->uc_mcontext.mc_rsp = rsp;
     ctx->uc_mcontext.mc_rip = (uintptr_t)fptr;
+#elif defined(_OS_OPENBSD_) && defined(_CPU_X86_64_)
+    ucontext_t *ctx = (ucontext_t*)_ctx;
+    rsp -= sizeof(void*);
+    *(void**)rsp = NULL;
+    ctx->uc_mcontext.mc_rsp = rsp;
+    ctx->uc_mcontext.mc_rip = (uintptr_t)fptr;
 #elif defined(_OS_LINUX_) && defined(_CPU_X86_)
     ucontext_t *ctx = (ucontext_t*)_ctx;
     rsp -= sizeof(void*);
@@ -105,6 +111,12 @@ static void jl_call_in_ctx(jl_ptls_t ptls, void (*fptr)(void), void *_ctx)
     ctx->uc_mcontext.gregs[REG_ESP] = rsp;
     ctx->uc_mcontext.gregs[REG_EIP] = (uintptr_t)fptr;
 #elif defined(_OS_FREEBSD_) && defined(_CPU_X86_)
+    ucontext_t *ctx = (ucontext_t*)_ctx;
+    rsp -= sizeof(void*);
+    *(void**)rsp = NULL;
+    ctx->uc_mcontext.mc_esp = rsp;
+    ctx->uc_mcontext.mc_eip = (uintptr_t)fptr;
+#elif defined(_OS_OPENBSD_) && defined(_CPU_X86_)
     ucontext_t *ctx = (ucontext_t*)_ctx;
     rsp -= sizeof(void*);
     *(void**)rsp = NULL;

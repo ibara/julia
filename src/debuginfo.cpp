@@ -818,7 +818,7 @@ static objfileentry_t &find_object_file(uint64_t fbase, StringRef fname)
     int isdarwin = 0, islinux = 0, iswindows = 0;
 #if defined(_OS_DARWIN_)
     isdarwin = 1;
-#elif defined(_OS_LINUX_) || defined(_OS_FREEBSD_)
+#elif defined(_OS_LINUX_) || defined(_OS_FREEBSD_) || defined(_OS_OPENBSD_)
     islinux = 1;
 #elif defined(_OS_WINDOWS_)
     iswindows = 1;

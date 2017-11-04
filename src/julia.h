@@ -1416,7 +1416,7 @@ JL_DLLEXPORT int jl_dlclose(jl_uv_libhandle handle);
 JL_DLLEXPORT void *jl_dlsym_e(jl_uv_libhandle handle, const char *symbol);
 JL_DLLEXPORT void *jl_dlsym(jl_uv_libhandle handle, const char *symbol);
 
-#if defined(__linux__) || defined(__FreeBSD__)
+#if defined(__linux__) || defined(__FreeBSD__) || defined(__OpenBSD__)
 JL_DLLEXPORT const char *jl_lookup_soname(const char *pfx, size_t n);
 #endif
 

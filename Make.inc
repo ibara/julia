@@ -355,6 +355,11 @@ USEGCC := 0
 USECLANG := 1
 endif
 
+ifeq ($(OS), OpenBSD)
+USEGCC := 0
+USECLANG := 1
+endif
+
 ifeq ($(OS), Darwin)
 DARWINVER := $(shell uname -r | cut -b 1-2)
 DARWINVER_GTE13 := $(shell expr `uname -r | cut -b 1-2` \>= 13)
@@ -501,7 +506,7 @@ else
 build_shlibdir := $(build_libdir)
 endif
 
-ifeq ($(OS), FreeBSD)
+ifeq (,$(findstring $(OS),FreeBSD OpenBSD))
 LOCALBASE ?= /usr/local
 else
 LOCALBASE ?= /usr
@@ -516,7 +521,7 @@ endif
 
 # A bit of a kludge to work around libraries linking to FreeBSD's outdated system libgcc_s
 # Instead, let's link to the libgcc_s corresponding to the installation of gfortran
-ifeq ($(OS),FreeBSD)
+ifeq (,$(findstring $(OS),FreeBSD OpenBSD))
 ifneq (,$(findstring gfortran,$(FC)))
 
 # First let's figure out what version of GCC we're dealing with
@@ -539,7 +544,7 @@ LDFLAGS += -L$(build_libdir) -L$(GCCPATH) -Wl,-rpath,$(build_libdir) -Wl,-rpath,
 FC += -Wl,-rpath=$(GCCPATH)
 
 endif # gfortran
-endif # FreeBSD
+endif # FreeBSD || OpenBSD
 
 ifneq ($(CC_BASE)$(CXX_BASE),$(shell echo $(CC) | cut -d' ' -f1)$(shell echo $(CXX) | cut -d' ' -f1))
     $(error Forgot override directive on CC or CXX in Make.user? Cowardly refusing to build)
@@ -984,6 +989,10 @@ endif
 ifeq ($(OS), FreeBSD)
 JLDFLAGS := -Wl,-Bdynamic
 OSLIBS += -lelf -lkvm -lrt
+
+ifeq ($(OS), OpenBSD)
+JLDFLAGS := -Wl,-Bdynamic
+OSLIBS += -lelf -lkvm
 
 # Tweak order of libgcc_s in DT_NEEDED,
 # make it loaded first to

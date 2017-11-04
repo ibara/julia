@@ -12,6 +12,7 @@
     @test !Sys.isapple(:Windows)
     @test Sys.isunix(:Darwin)
     @test Sys.isunix(:FreeBSD)
+    @test Sys.isunix(:OpenBSD)
     @test_throws ArgumentError Sys.isunix(:BeOS)
     if !Sys.iswindows()
         @test Sys.windows_version() == v"0.0.0"

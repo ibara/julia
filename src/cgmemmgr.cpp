@@ -21,7 +21,7 @@
 #    define MAP_ANONYMOUS MAP_ANON
 #  endif
 #endif
-#ifdef _OS_FREEBSD_
+#if defined(_OS_FREEBSD_) || defined(_OS_OPENBSD_)
 #  include <sys/types.h>
 #endif
 #include "julia_assert.h"
@@ -165,7 +165,7 @@ static intptr_t get_anon_hdl(void)
     if (check_fd_or_close(fd))
         return fd;
 #  endif
-#  ifdef _OS_FREEBSD_
+#  if defined(_OS_FREEBSD_) || defined(_OS_OPENBSD_)
     fd = shm_open(SHM_ANON, O_RDWR, S_IRWXU);
     if (check_fd_or_close(fd))
         return fd;

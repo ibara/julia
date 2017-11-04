@@ -183,7 +183,7 @@ let dl = C_NULL
     end
 end
 
-if Sys.KERNEL in (:Linux, :FreeBSD)
+if Sys.KERNEL in (:Linux, :FreeBSD, :OpenBSD)
     ccall(:jl_read_sonames, Void, ())
 end
 

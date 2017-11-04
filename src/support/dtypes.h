@@ -85,6 +85,10 @@
 #define __BYTE_ORDER     BYTE_ORDER
 #endif
 
+#ifdef _OS_OPENBSD_
+#include <endian.h>
+#endif
+
 #ifdef _OS_WINDOWS_
 #define __LITTLE_ENDIAN    1234
 #define __BIG_ENDIAN       4321

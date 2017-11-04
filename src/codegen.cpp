@@ -13,7 +13,7 @@
 // also, use ELF because RuntimeDyld COFF X86_64 doesn't seem to work (fails to generate function pointers)?
 #define FORCE_ELF
 #endif
-#if defined(_OS_WINDOWS_) || defined(_OS_FREEBSD_)
+#if defined(_OS_WINDOWS_) || defined(_OS_FREEBSD_) || defined(_OS_OPENBSD_)
 #  define JL_DISABLE_FPO
 #endif
 #if defined(_CPU_X86_)
