@@ -1012,13 +1012,14 @@ else #Linux
 JLIBLDFLAGS :=
 endif
 
-ifeq ($(OS), FreeBSD)
-JLDFLAGS := -Wl,-Bdynamic
-OSLIBS += -lelf -lkvm -lrt
-
 ifeq ($(OS), OpenBSD)
 JLDFLAGS := -Wl,-Bdynamic
 OSLIBS += -lelf -lkvm
+endif
+
+ifeq ($(OS), FreeBSD)
+JLDFLAGS := -Wl,-Bdynamic
+OSLIBS += -lelf -lkvm -lrt
 
 # Tweak order of libgcc_s in DT_NEEDED,
 # make it loaded first to
