@@ -1013,7 +1013,8 @@ JLIBLDFLAGS :=
 endif
 
 ifeq ($(OS), OpenBSD)
-JLDFLAGS := -Wl,-Bdynamic
+JCFLAGS += -I$(LOCALBASE)/include
+JLDFLAGS := -Wl,-Bdynamic -L$(LOCALBASE)/lib
 OSLIBS += -lelf -lkvm
 endif
 
