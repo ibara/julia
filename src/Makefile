@@ -31,11 +31,7 @@ else
 FLAGS += -DJL_BUILD_UNAME='"$(OS)"'
 endif
 
-ifeq ($(OS),FreeBSD)
-FLAGS += -I$(LOCALBASE)/include
-endif
-
-ifeq($(OS),OpenBSD)
+ifneq (,$(findstring $(OS),FreeBSD OpenBSD))
 FLAGS += -I$(LOCALBASE)/include
 endif
 
