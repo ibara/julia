@@ -532,7 +532,7 @@ else
 build_shlibdir := $(build_libdir)
 endif
 
-ifeq (,$(findstring $(OS),FreeBSD OpenBSD))
+ifneq (,$(findstring $(OS),FreeBSD OpenBSD))
 LOCALBASE ?= /usr/local
 else
 LOCALBASE ?= /usr
@@ -547,7 +547,7 @@ endif
 
 # A bit of a kludge to work around libraries linking to FreeBSD's outdated system libgcc_s
 # Instead, let's link to the libgcc_s corresponding to the installation of gfortran
-ifeq (,$(findstring $(OS),FreeBSD OpenBSD))
+ifneq (,$(findstring $(OS),FreeBSD OpenBSD))
 ifneq (,$(findstring gfortran,$(FC)))
 
 # First let's figure out what version of GCC we're dealing with
